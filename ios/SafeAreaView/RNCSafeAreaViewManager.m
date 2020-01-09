@@ -13,4 +13,9 @@ RCT_EXPORT_VIEW_PROPERTY(onInsetsChange, RCTBubblingEventBlock)
   return [RNCSafeAreaView new];
 }
 
+RCT_EXPORT_METHOD(updateLayout)
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"SafeAreaViewUpdateLayout" object:self];
+}
+
 @end

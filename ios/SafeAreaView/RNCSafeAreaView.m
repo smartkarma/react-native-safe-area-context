@@ -19,6 +19,24 @@ static BOOL UIEdgeInsetsEqualToEdgeInsetsWithThreshold(UIEdgeInsets insets1, UIE
   BOOL _initialInsetsSent;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+  self = [super initWithFrame:frame];
+  if (self) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarUpdate:) name:@"SafeAreaViewUpdateLayout" object:nil];    
+  }
+  return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SafeAreaViewUpdateLayout" object:nil];
+}
+
+- (void) statusBarUpdate:(NSNotification *) notification
+{
+  [self layoutSubviews];
+}
+
 - (BOOL)isSupportedByOS
 {
   return [self respondsToSelector:@selector(safeAreaInsets)];
